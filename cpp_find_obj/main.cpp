@@ -3,9 +3,11 @@
 #include "opencv2/core/core.hpp"
 #include "opencv2/features2d/features2d.hpp"
 #include "opencv2/highgui/highgui.hpp"
+#include "opencv2/nonfree/features2d.hpp"
 #include "opencv2/calib3d/calib3d.hpp"
 
 using namespace cv;
+void readme();
 
 /** @function main */
 int main(int argc, char** argv)
@@ -36,7 +38,7 @@ int main(int argc, char** argv)
 	detector.detect( img_scene, keypoints_scene);
 
 	// -- Step2: Calculate descriptors (feature vectors)
-	SurfFeatureExtractor extractor;
+	SurfDescriptorExtractor extractor;
 
 	Mat descriptors_object, descriptors_scene;
 
@@ -52,7 +54,7 @@ int main(int argc, char** argv)
 	double min_dist = 100;
 
 	// -- Quick calculation of max and min distances between keypoints
-	for(int i = 0; i < descriptors_object,rows; i++){
+	for(int i = 0; i < descriptors_object.rows; i++){
 		double dist = matches[i].distance;
 		if (dist<min_dist)
 			min_dist = dist;
