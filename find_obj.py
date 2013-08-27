@@ -97,6 +97,7 @@ def explore_match(win, img1, img2, kp_pairs, status = None, H = None):
 			cv.line(vis, (x1, y1), (x2, y2), green)
 
 	cv.imshow(win, vis)
+	
 	def onmouse(event, x, y, flags, param):
 		cur_vis = vis
 		if flags & cv.EVENT_FLAG_LBUTTON:
@@ -116,6 +117,7 @@ def explore_match(win, img1, img2, kp_pairs, status = None, H = None):
 			cur_vis[:, w1:] = cv.drawKeypoints(cur_vis[:, w1:], kp2s, flags=4, color = kp_color)
 
 		cv.imshow(win, cur_vis)
+
 	cv.setMouseCallback(win, onmouse)
 	return vis
 
