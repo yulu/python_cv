@@ -34,7 +34,7 @@ MIN_MATCH_COUNT = 10
   descrs    - their descriptors
   data      - some user-provided data
 '''
-PlanarTarget = namedtuple('PlaneTarget', 'image, rect, keypoints, descrs, data')
+PlanarTarget = namedtuple('PlanarTarget', 'image, rect, keypoints, descrs, data')
 
 '''
   target - reference to PlanarTarget
@@ -65,6 +65,8 @@ class PlaneTracker:
             if x0 <= x <= x1 and y0 <= y <= y1:
                 points.append(kp)
                 descs.append(desc)
+        if len(points) < MIN_MATCH_COUNT:
+        	return []
         descs = np.uint8(descs)
         self.matcher.add([descs])
         target = PlanarTarget(image = image, rect=rect, keypoints = points, descrs=descs, data=None)
@@ -87,6 +89,7 @@ class PlaneTracker:
         matches_by_id = [[] for _ in xrange(len(self.targets))]
         for m in matches:
             matches_by_id[m.imgIdx].append(m)
+
         tracked = []
         for imgIdx, matches in enumerate(matches_by_id):
             if len(matches) < MIN_MATCH_COUNT:
